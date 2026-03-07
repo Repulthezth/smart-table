@@ -1,21 +1,21 @@
 import './fonts/ys-display/fonts.css'
 import './style.css'
 
-import {data as sourceData} from "./data/dataset_1.js";
+import { data as sourceData } from "./data/dataset_1.js";
 
-import {initData} from "./data.js";
-import {processFormData} from "./lib/utils.js";
+import { initData } from "./data.js";
+import { processFormData } from "./lib/utils.js";
 
-import {initTable} from "./components/table.js";
-import {initPagination} from "./components/pagination.js";
-import {initSorting} from "./components/sorting.js";
-import {initFiltering} from "./components/filtering.js";
-import {initSearching} from "./components/searching.js";
+import { initTable } from "./components/table.js";
+import { initPagination } from "./components/pagination.js";
+import { initSorting } from "./components/sorting.js";
+import { initFiltering } from "./components/filtering.js";
+import { initSearching } from "./components/searching.js";
 // @todo: подключение
 
 
 // Исходные данные используемые в render()
-const {data, ...indexes} = initData(sourceData);
+const { data, ...indexes } = initData(sourceData);
 
 /**
  * Сбор и обработка полей из таблицы
@@ -23,14 +23,16 @@ const {data, ...indexes} = initData(sourceData);
  */
 function collectState() {
     const state = processFormData(new FormData(sampleTable.container));
-    
+
     const rowsPerPage = parseInt(state.rowsPerPage);
     const page = parseInt(state.page ?? 1);
-
+    const from = parseFloat(state.totalFrom);
+    const to = parseFloat(state.totalTo);
     return {
         ...state,
         rowsPerPage,
-        page
+        page,
+        total: [from, to],
     };
 }
 
